@@ -24,5 +24,5 @@ pip install -r requirements.txt
 - db.create_all()
 
 ### 6. Run the application 
-- flask run
+- python3 run.py
 - visit http://127.0.0.1:5000
