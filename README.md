@@ -6,7 +6,7 @@
 - Git 
 
 ### 1. Clone the Repository to local machine
-- https://github.com/Irving999/hw3.git
+- git clone https://github.com/Irving999/hw3.git
 - cd hw3
   
 ### 2. Create a Virtual Environment
