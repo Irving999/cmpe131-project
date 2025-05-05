@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField
-from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError
+from wtforms import StringField, IntegerField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectMultipleField
+from wtforms.validators import Email, EqualTo, DataRequired, Length, ValidationError, NumberRange
 import sqlalchemy as sa
 from app import db
-from app.models import User
+from app.models import User, Tag
 
 # Login form with fields for username, password, and submit button
 class LoginForm(FlaskForm):
@@ -18,7 +18,22 @@ class RecipeForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     ingredients = TextAreaField('Ingredients', validators=[DataRequired()])
     instructions = TextAreaField('Instructions', validators=[DataRequired()])
+    tags = SelectMultipleField('Tags', coerce=int, validators=[DataRequired(message="Select at least one tag")])
     submit = SubmitField('Submit')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.tags.choices = [(tag.id, tag.name) for tag in Tag.query.order_by(Tag.name).all()]
+
+
+class CommentForm(FlaskForm):
+    content = TextAreaField('Post what you think!', 
+        render_kw={"placeholder ": "Add a comment..."}, validators=[DataRequired(message="Comment cannot be empty.")])
+    submit = SubmitField('Post')
+
+class RatingForm(FlaskForm):
+    score = IntegerField('Rating', validators=[DataRequired(), NumberRange(min=1, max=5)])
+    submit = SubmitField('Submit Rating')
 
 # Registration form with fields for username, email, password, and password confirmation
 class RegistrationForm(FlaskForm):
