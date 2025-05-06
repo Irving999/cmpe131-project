@@ -7,7 +7,7 @@
 
 ### 1. Clone the Repository to local machine
 - git clone https://github.com/Irving999/hw3.git
-- cd hw3
+- cd cmpe131-project
   
 ### 2. Create a Virtual Environment
 python3 -m venv .venv
